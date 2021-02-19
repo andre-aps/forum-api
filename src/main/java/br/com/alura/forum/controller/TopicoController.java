@@ -23,7 +23,7 @@ import br.com.alura.forum.dto.AtualizacaoTopicoDto;
 import br.com.alura.forum.dto.DetalhesTopicoDto;
 import br.com.alura.forum.dto.TopicoDto;
 import br.com.alura.forum.dto.TopicoFormDto;
-import br.com.alura.forum.modelo.Topico;
+import br.com.alura.forum.model.Topico;
 import br.com.alura.forum.repository.CursoRepository;
 import br.com.alura.forum.repository.TopicoRepository;
 

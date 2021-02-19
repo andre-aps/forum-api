@@ -5,7 +5,7 @@ import java.util.Optional;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.alura.forum.modelo.Topico;
+import br.com.alura.forum.model.Topico;
 
 public class AtualizacaoTopicoDto {
 
