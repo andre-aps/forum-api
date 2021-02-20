@@ -38,14 +38,21 @@ public class TopicoController {
 	CursoRepository cursoRepository;
 
 	@GetMapping
-	public List<TopicoDto> listar(String nomeCurso) {
+	public ResponseEntity<List<TopicoDto>> listar(String nomeCurso) {
 		if (nomeCurso != null) {
-			return TopicoDto.converte(topicoRepository.findByCursoNome(nomeCurso));
+			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+			
+			if(!topicos.isEmpty())
+				return ResponseEntity.ok().body(TopicoDto.converte(topicoRepository.findByCursoNome(nomeCurso)));
+			else
+				return ResponseEntity.notFound().build();
+		
 		} else {
 			List<Topico> lista = topicoRepository.findAll();
-			return TopicoDto.converte(lista);
+			return ResponseEntity.ok().body(TopicoDto.converte(lista));
 		}
 	}
+	
 	
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<DetalhesTopicoDto> detalhar(@PathVariable Long id) {
