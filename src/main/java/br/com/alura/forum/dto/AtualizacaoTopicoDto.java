@@ -15,9 +15,10 @@ public class AtualizacaoTopicoDto {
 	@NotNull
 	@NotEmpty
 	private String mensagem;
-	
-	public AtualizacaoTopicoDto() {}
-	
+
+	public AtualizacaoTopicoDto() {
+	}
+
 	public AtualizacaoTopicoDto(Topico topico) {
 		this.titulo = topico.getTitulo();
 		this.mensagem = topico.getMensagem();
@@ -34,9 +35,9 @@ public class AtualizacaoTopicoDto {
 	public Topico atualiza(Optional<Topico> topico) {
 		topico.get().setTitulo(this.getTitulo());
 		topico.get().setMensagem(this.getMensagem());
-		
+
 		return topico.get();
-		
+
 	}
 
 }

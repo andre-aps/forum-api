@@ -4,8 +4,9 @@ public class FormDto {
 
 	private String campo;
 	private String erro;
-	
-	public FormDto() {}
+
+	public FormDto() {
+	}
 
 	public FormDto(String campo, String erro) {
 		this.campo = campo;

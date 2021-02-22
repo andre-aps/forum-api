@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import br.com.alura.forum.model.Topico;
 
 @Repository
-public interface TopicoRepository extends JpaRepository<Topico, Long>{
+public interface TopicoRepository extends JpaRepository<Topico, Long> {
 
 	List<Topico> findByCursoNome(String nomeCurso);
 

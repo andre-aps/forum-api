@@ -18,8 +18,9 @@ public class DetalhesTopicoDto {
 	private String nomeAutor;
 	private StatusTopico status;
 	private List<RespostaDto> respostas = new ArrayList<>();
-	
-	public DetalhesTopicoDto() {}
+
+	public DetalhesTopicoDto() {
+	}
 
 	public DetalhesTopicoDto(Optional<Topico> topico) {
 		this.id = topico.get().getId();

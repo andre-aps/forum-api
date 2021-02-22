@@ -18,8 +18,9 @@ public class TopicoFormDto {
 	@NotEmpty
 	private String nomeCurso;
 
-	public TopicoFormDto() {}
-	
+	public TopicoFormDto() {
+	}
+
 	public TopicoFormDto(String titulo, String mensagem, String nomeCurso) {
 		this.titulo = titulo;
 		this.mensagem = mensagem;
