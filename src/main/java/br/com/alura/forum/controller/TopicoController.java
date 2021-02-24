@@ -1,9 +1,7 @@
 package br.com.alura.forum.controller;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -23,79 +21,41 @@ import br.com.alura.forum.dto.AtualizacaoTopicoDto;
 import br.com.alura.forum.dto.DetalhesTopicoDto;
 import br.com.alura.forum.dto.TopicoDto;
 import br.com.alura.forum.dto.TopicoFormDto;
-import br.com.alura.forum.model.Topico;
-import br.com.alura.forum.repository.CursoRepository;
-import br.com.alura.forum.repository.TopicoRepository;
+import br.com.alura.forum.service.TopicoService;
 
 @RestController
 @RequestMapping(path = "/topicos")
 public class TopicoController {
 
 	@Autowired
-	TopicoRepository topicoRepository;
-	
-	@Autowired
-	CursoRepository cursoRepository;
+	TopicoService topicoService;
 
 	@GetMapping
 	public ResponseEntity<List<TopicoDto>> listar(String nomeCurso) {
-		if (nomeCurso != null) {
-			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
-			
-			if(!topicos.isEmpty())
-				return ResponseEntity.ok().body(TopicoDto.converte(topicoRepository.findByCursoNome(nomeCurso)));
-			else
-				return ResponseEntity.notFound().build();
-		
-		} else {
-			List<Topico> lista = topicoRepository.findAll();
-			return ResponseEntity.ok().body(TopicoDto.converte(lista));
-		}
+		return topicoService.listar(nomeCurso);
 	}
-	
-	
+
 	@GetMapping(path = "/{id}")
 	public ResponseEntity<DetalhesTopicoDto> detalhar(@PathVariable Long id) {
-		Optional<Topico> topico = topicoRepository.findById(id);
-		if(!topico.isPresent())
-			return ResponseEntity.notFound().build();
-		else
-			return ResponseEntity.ok().body(new DetalhesTopicoDto(topico));
+		return topicoService.detalhar(id);
 	}
 
 	@PostMapping
 	@Transactional
 	public ResponseEntity<TopicoDto> salvar(@RequestBody @Valid TopicoFormDto form) throws URISyntaxException {
-		Topico topico = topicoRepository.save(form.converte(cursoRepository));
-		return ResponseEntity.created(new URI("/topicos")).body(new TopicoDto(topico));
+		return topicoService.salvar(form);
 	}
-	
+
 	@PutMapping(path = "/{id}")
 	@Transactional
-	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id,
-			@RequestBody @Valid AtualizacaoTopicoDto form) {
-		
-		Optional<Topico> topico = topicoRepository.findById(id);
-		if(!topico.isPresent()) {
-			return ResponseEntity.notFound().build();
-		} else {
-			Topico topicoAtualizado = form.atualiza(topico);
-			return ResponseEntity.ok().body(new TopicoDto(topicoAtualizado));
-		}
-		
+	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoDto form) {
+		return topicoService.atualizar(id, form);
 	}
-	
+
 	@DeleteMapping(path = "/{id}")
 	@Transactional
 	public ResponseEntity<TopicoDto> deletar(@PathVariable Long id) {
-		Optional<Topico> topico = topicoRepository.findById(id);
-		
-		if(!topico.isPresent()) {
-			return ResponseEntity.notFound().build();
-		} else {
-			topicoRepository.delete(topico.get());
-			return ResponseEntity.ok().build();
-		}
+		return topicoService.deletar(id);
 	}
-	
+
 }
