@@ -2,12 +2,13 @@ package br.com.alura.forum.service;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -32,17 +33,18 @@ public class TopicoService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 
-	public ResponseEntity<List<TopicoDto>> listar(String nomeCurso) {
+	public ResponseEntity<Page<TopicoDto>> listar(String nomeCurso, Pageable page) {
+		
 		if (nomeCurso != null) {
-			List<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso);
+			Page<Topico> topicos = topicoRepository.findByCursoNome(nomeCurso, page);
 
 			if (!topicos.isEmpty())
-				return ResponseEntity.ok().body(TopicoDto.converte(topicoRepository.findByCursoNome(nomeCurso)));
+				return ResponseEntity.ok().body(TopicoDto.converte(topicoRepository.findByCursoNome(nomeCurso, page)));
 			else
 				return ResponseEntity.notFound().build();
 
 		} else {
-			List<Topico> lista = topicoRepository.findAll();
+			Page<Topico> lista = topicoRepository.findAll(page);
 			return ResponseEntity.ok().body(TopicoDto.converte(lista));
 		}
 	}
