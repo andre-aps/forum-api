@@ -6,6 +6,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -35,6 +37,7 @@ public class TopicoController {
 	TopicoService topicoService;
 
 	@GetMapping
+	@Cacheable(cacheNames = "listaDeTopicos")
 	public ResponseEntity<Page<TopicoDto>> listar(@RequestParam(required = false) String nomeCurso,
 			@PageableDefault(sort = "id", direction = Direction.DESC) Pageable page) {
 		return topicoService.listar(nomeCurso, page);
@@ -47,18 +50,21 @@ public class TopicoController {
 
 	@PostMapping
 	@Transactional
+	@CacheEvict(cacheNames = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> salvar(@RequestBody @Valid TopicoFormDto form) throws URISyntaxException {
 		return topicoService.salvar(form);
 	}
 
 	@PutMapping(path = "/{id}")
 	@Transactional
+	@CacheEvict(cacheNames = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> atualizar(@PathVariable Long id, @RequestBody @Valid AtualizacaoTopicoDto form) {
 		return topicoService.atualizar(id, form);
 	}
 
 	@DeleteMapping(path = "/{id}")
 	@Transactional
+	@CacheEvict(cacheNames = "listaDeTopicos", allEntries = true)
 	public ResponseEntity<TopicoDto> deletar(@PathVariable Long id) {
 		return topicoService.deletar(id);
 	}
