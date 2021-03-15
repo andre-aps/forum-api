@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "forum.jwt.expiration",
+    "type": "java.lang.String",
+    "description": "Tempo de expiração do token"
+  },
+  {
+    "name": "forum.jwt.secret",
+    "type": "java.lang.String",
+    "description": "assinatura"
+  }
+]}
