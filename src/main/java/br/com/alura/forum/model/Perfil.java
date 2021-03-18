@@ -16,6 +16,9 @@ public class Perfil implements GrantedAuthority {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome;
+	
+	public Perfil() {
+	}
 
 	public Long getId() {
 		return id;
