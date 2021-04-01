@@ -50,6 +50,7 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 		.antMatchers(HttpMethod.GET, "/topicos").permitAll()
 		.antMatchers(HttpMethod.GET, "/topicos/*").permitAll()
 		.antMatchers(HttpMethod.POST, "/auth").permitAll()
+		.antMatchers(HttpMethod.GET, "/swagger-ui/**").permitAll()
 		.antMatchers(HttpMethod.GET, "/actuator/**").hasRole("ADMIN")
 		.antMatchers(HttpMethod.DELETE, "/topicos/*").hasRole("ADMIN")
 		.anyRequest().authenticated()
