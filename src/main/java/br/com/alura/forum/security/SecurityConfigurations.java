@@ -1,5 +1,8 @@
 package br.com.alura.forum.security;
 
+import br.com.alura.forum.repository.UsuarioRepository;
+import br.com.alura.forum.service.AutenticacaoService;
+import br.com.alura.forum.service.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,23 +17,19 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import br.com.alura.forum.repository.UsuarioRepository;
-import br.com.alura.forum.service.AutenticacaoService;
-import br.com.alura.forum.service.TokenService;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	AutenticacaoService autenticacaoService;
-	
+
 	@Autowired
 	TokenService tokenService;
-	
+
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
+
 	@Override
 	@Bean
 	protected AuthenticationManager authenticationManager() throws Exception {
